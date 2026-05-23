@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SCAA_API.Data;
 using SCAA_API.Entities.Authentication;
@@ -13,17 +14,20 @@ namespace SCAA_API.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IMapper _mapper;
         private const string _adminRole = "admin";
 
         public AuthService(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
+            IMapper mapper,
             IJwtTokenGenerator jwtTokenGenerator)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
@@ -51,15 +55,9 @@ namespace SCAA_API.Services
 
         public async Task<string> RegisterAdmin(RegistrationRequestDto registrationRequestDto)
         {
-            ApplicationUser user = new()
-            {
-                UserName = registrationRequestDto.Email,
-                NormalizedUserName = registrationRequestDto.Email.ToUpper(),
-                Email = registrationRequestDto.Email,
-                NormalizedEmail = registrationRequestDto.Email.ToUpper()
-            };
-
+            var user = _mapper.Map<ApplicationUser>(registrationRequestDto);
             var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
+
             if (result.Succeeded)
             {
                 var userToReturn = await _context.ApplicationUsers

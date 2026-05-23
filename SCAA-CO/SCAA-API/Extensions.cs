@@ -160,6 +160,7 @@ namespace SCAA_API
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
         }
 
     }

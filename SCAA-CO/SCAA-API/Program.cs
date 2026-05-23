@@ -13,7 +13,7 @@ namespace SCAA_API
             builder.AddDatabase();
             builder.AddHealthChecks();
             builder.AddRepository();
-            //builder.AddMapster();
+            builder.AddMapster();
             builder.AddServices();
             builder.AddIdentity();
             builder.AddAuthentication();
