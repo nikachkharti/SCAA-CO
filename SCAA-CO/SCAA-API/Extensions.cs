@@ -128,7 +128,7 @@ namespace SCAA_API
             .AddDefaultTokenProviders();
         }
 
-        public static WebApplicationBuilder AddAuthentication(this WebApplicationBuilder builder)
+        public static void AddAuthentication(this WebApplicationBuilder builder)
         {
             var secret = builder.Configuration.GetValue<string>("JwtOptions:Secret");
             var issuer = builder.Configuration.GetValue<string>("JwtOptions:Issuer");
@@ -153,7 +153,6 @@ namespace SCAA_API
                 };
             });
 
-            return builder;
         }
 
         public static void AddServices(this WebApplicationBuilder builder)
