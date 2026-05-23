@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
+using SCAA_API.Data;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
@@ -54,5 +56,29 @@ namespace SCAA_API
             builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
         }
 
+        public static void AddDatabase(this WebApplicationBuilder builder)
+        {
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        }
+
+        public static void AddHealthChecks(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddHealthChecks();
+        }
+
+        public static void UseDbAutoUpdate(this WebApplication app)
+        {
+            try
+            {
+                using var scope = app.Services.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Migration failed: {ex.Message}", ex);
+            }
+        }
     }
 }

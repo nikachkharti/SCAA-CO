@@ -8,13 +8,17 @@ namespace SCAA_API
 
             builder.AddControllers();
             builder.AddSwagger();
+            builder.AddDatabase();
+            builder.AddHealthChecks();
 
             var app = builder.Build();
 
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseDbAutoUpdate();
             if (app.Environment.IsDevelopment())
                 app.UseHttpsRedirection();
+            app.MapHealthChecks("/health");
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
