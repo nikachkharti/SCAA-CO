@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mapster;
+using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using SCAA_API.Data;
+using SCAA_API.Mapping;
 using SCAA_API.Repository;
 using SCAA_API.Repository.Contracts;
 using Swashbuckle.AspNetCore.Filters;
@@ -92,6 +95,15 @@ namespace SCAA_API
             builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+        }
+
+        public static void AddMapster(this WebApplicationBuilder builder)
+        {
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(typeof(MappingConfig).Assembly);
+
+            builder.Services.AddSingleton(config);
+            builder.Services.AddScoped<IMapper, ServiceMapper>();
         }
     }
 }

@@ -2,6 +2,8 @@ namespace SCAA_API
 {
     public class Program
     {
+        protected Program() { }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ namespace SCAA_API
             builder.AddDatabase();
             builder.AddHealthChecks();
             builder.AddRepository();
+            builder.AddMapster();
 
             var app = builder.Build();
 
