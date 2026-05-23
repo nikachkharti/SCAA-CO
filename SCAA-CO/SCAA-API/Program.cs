@@ -10,6 +10,7 @@ namespace SCAA_API
             builder.AddSwagger();
             builder.AddDatabase();
             builder.AddHealthChecks();
+            builder.AddRepository();
 
             var app = builder.Build();
 

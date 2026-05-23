@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using SCAA_API.Data;
+using SCAA_API.Repository;
+using SCAA_API.Repository.Contracts;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
@@ -79,6 +81,17 @@ namespace SCAA_API
             {
                 Console.WriteLine($"Migration failed: {ex.Message}", ex);
             }
+        }
+
+        public static void AddRepository(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+            builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
         }
     }
 }
