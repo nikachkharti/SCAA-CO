@@ -1,4 +1,6 @@
 services:
+
+### SCAA API ###
   scaa-api:
     container_name: scaa-api
     image: ${DOCKER_REGISTRY-}scaaapi
@@ -21,3 +23,21 @@ services:
       retries: 5
       start_period: 30s
     restart: always
+    depends_on:
+      - sqlserver
+
+### SQL SERVER ###
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    restart: always
+
+volumes:
+  sqlserver-data:
