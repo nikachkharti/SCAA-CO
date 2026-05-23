@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SCAA_API.Entities;
+using SCAA_API.Entities.Authentication;
 
 namespace SCAA_API.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -13,6 +15,7 @@ namespace SCAA_API.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.SeedData();
+            modelBuilder.NormalizeIdentityTableNames();
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -21,5 +24,6 @@ namespace SCAA_API.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

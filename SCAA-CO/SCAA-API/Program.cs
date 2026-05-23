@@ -14,6 +14,10 @@ namespace SCAA_API
             builder.AddHealthChecks();
             builder.AddRepository();
             //builder.AddMapster();
+            builder.AddServices();
+            builder.AddIdentity();
+            builder.AddAuthentication();
+
 
             var app = builder.Build();
 
@@ -23,6 +27,7 @@ namespace SCAA_API
             if (app.Environment.IsDevelopment())
                 app.UseHttpsRedirection();
             app.MapHealthChecks("/health");
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SCAA_API.Entities.Authentication;
 
 namespace SCAA_API.Data
 {
@@ -14,6 +16,19 @@ namespace SCAA_API.Data
             SeedOrderItems(modelBuilder);
         }
 
+        public static void NormalizeIdentityTableNames(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ApplicationUser>(entity => { entity.ToTable(name: "Users"); });
+            modelBuilder.Entity<IdentityRole>(entity => { entity.ToTable(name: "Roles"); });
+            modelBuilder.Entity<IdentityUserRole<string>>(entity => { entity.ToTable("UserRoles"); });
+            modelBuilder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("UserClaims"); });
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable("UserLogins"); });
+            modelBuilder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
+            modelBuilder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
+        }
+
+
+
         private static void SeedCategories(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.Category>().HasData(
@@ -24,7 +39,6 @@ namespace SCAA_API.Data
                 new Entities.Category { Id = 5, CategoryName = "Sports" }
             );
         }
-
         private static void SeedSuppliers(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.Supplier>().HasData(
@@ -35,7 +49,6 @@ namespace SCAA_API.Data
                 new Entities.Supplier { Id = 5, SupplierName = "Sports Gear Supply" }
             );
         }
-
         private static void SeedProducts(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.Product>().HasData(
@@ -65,7 +78,6 @@ namespace SCAA_API.Data
                 new Entities.Product { Id = 15, ProductName = "Running Shoes", Price = 99.99m, Quantity = 50, CategoryId = 5, SupplierId = 5 }
             );
         }
-
         private static void SeedCustomers(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.Customer>().HasData(
@@ -116,7 +128,6 @@ namespace SCAA_API.Data
                 }
             );
         }
-
         private static void SeedOrders(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.Order>().HasData(
@@ -176,7 +187,6 @@ namespace SCAA_API.Data
                 }
             );
         }
-
         private static void SeedOrderItems(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Entities.OrderItem>().HasData(
@@ -205,6 +215,5 @@ namespace SCAA_API.Data
                 new Entities.OrderItem { Id = 12, OrderId = 6, ProductId = 6, Quantity = 1, PricePerUnit = 39.99m }
             );
         }
-
     }
 }
