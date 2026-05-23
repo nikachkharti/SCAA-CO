@@ -11,7 +11,7 @@ namespace SCAA_API.Entities
         public int Id { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime LastLoginDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
         public decimal OrderAmount { get; set; }
 

@@ -26,6 +26,5 @@ namespace SCAA_API.Entities
         public int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
 
-        public ICollection<Inventory> Inventories { get; set; }
     }
 }

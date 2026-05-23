@@ -12,7 +12,6 @@ namespace SCAA_API.Data
             SeedCustomers(modelBuilder);
             SeedOrders(modelBuilder);
             SeedOrderItems(modelBuilder);
-            SeedInventories(modelBuilder);
         }
 
         private static void SeedCategories(this ModelBuilder modelBuilder)
@@ -125,7 +124,7 @@ namespace SCAA_API.Data
                 {
                     Id = 1,
                     CustomerId = 1,
-                    LastLoginDate = DateTime.Now.AddDays(-4).Date,
+                    OrderDate = DateTime.Now.AddDays(-4).Date,
                     OrderAmount = 199.97m,
                     Status = "Delivered",
                     Discount = 10m
@@ -134,7 +133,7 @@ namespace SCAA_API.Data
                 {
                     Id = 2,
                     CustomerId = 2,
-                    LastLoginDate = DateTime.Now.AddDays(-1).Date,
+                    OrderDate = DateTime.Now.AddDays(-1).Date,
                     OrderAmount = 369.96m,
                     Status = "Processing",
                     Discount = 15m
@@ -143,7 +142,7 @@ namespace SCAA_API.Data
                 {
                     Id = 3,
                     CustomerId = 3,
-                    LastLoginDate = DateTime.Now.Date,
+                    OrderDate = DateTime.Now.Date,
                     OrderAmount = 249.97m,
                     Status = "Pending",
                     Discount = 5m
@@ -152,7 +151,7 @@ namespace SCAA_API.Data
                 {
                     Id = 4,
                     CustomerId = 1,
-                    LastLoginDate = DateTime.Now.AddDays(-3).Date,
+                    OrderDate = DateTime.Now.AddDays(-3).Date,
                     OrderAmount = 129.98m,
                     Status = "Delivered",
                     Discount = 0m
@@ -161,7 +160,7 @@ namespace SCAA_API.Data
                 {
                     Id = 5,
                     CustomerId = 4,
-                    LastLoginDate = DateTime.Now.AddDays(-2).Date,
+                    OrderDate = DateTime.Now.AddDays(-2).Date,
                     OrderAmount = 389.97m,
                     Status = "Shipped",
                     Discount = 20m
@@ -170,7 +169,7 @@ namespace SCAA_API.Data
                 {
                     Id = 6,
                     CustomerId = 5,
-                    LastLoginDate = DateTime.Now.AddDays(-6).Date,
+                    OrderDate = DateTime.Now.AddDays(-6).Date,
                     OrderAmount = 149.98m,
                     Status = "Delivered",
                     Discount = 8m
@@ -207,25 +206,5 @@ namespace SCAA_API.Data
             );
         }
 
-        private static void SeedInventories(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Entities.Inventory>().HasData(
-                new Entities.Inventory { Id = 1, ProductId = 1, AvailableQuantity = 48 },
-                new Entities.Inventory { Id = 2, ProductId = 2, AvailableQuantity = 195 },
-                new Entities.Inventory { Id = 3, ProductId = 3, AvailableQuantity = 73 },
-                new Entities.Inventory { Id = 4, ProductId = 4, AvailableQuantity = 27 },
-                new Entities.Inventory { Id = 5, ProductId = 5, AvailableQuantity = 23 },
-                new Entities.Inventory { Id = 6, ProductId = 6, AvailableQuantity = 39 },
-                new Entities.Inventory { Id = 7, ProductId = 7, AvailableQuantity = 96 },
-                new Entities.Inventory { Id = 8, ProductId = 8, AvailableQuantity = 58 },
-                new Entities.Inventory { Id = 9, ProductId = 9, AvailableQuantity = 35 },
-                new Entities.Inventory { Id = 10, ProductId = 10, AvailableQuantity = 42 },
-                new Entities.Inventory { Id = 11, ProductId = 11, AvailableQuantity = 79 },
-                new Entities.Inventory { Id = 12, ProductId = 12, AvailableQuantity = 55 },
-                new Entities.Inventory { Id = 13, ProductId = 13, AvailableQuantity = 65 },
-                new Entities.Inventory { Id = 14, ProductId = 14, AvailableQuantity = 38 },
-                new Entities.Inventory { Id = 15, ProductId = 15, AvailableQuantity = 48 }
-            );
-        }
     }
 }
