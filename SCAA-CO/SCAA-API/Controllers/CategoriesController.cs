@@ -24,7 +24,7 @@ namespace SCAA_API.Controllers
             {
                 Message = CommonResponseMessage.SuccessMessage,
                 IsSuccess = true,
-                HttpStatusCode = Convert.ToInt32(HttpStatusCode.Created),
+                HttpStatusCode = Convert.ToInt32(HttpStatusCode.OK),
                 Result = result
             };
 
