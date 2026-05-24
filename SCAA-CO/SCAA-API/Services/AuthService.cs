@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SCAA_API.Data;
 using SCAA_API.Entities.Authentication;
+using SCAA_API.Exceptions;
 using SCAA_API.Models.Authentication;
 using SCAA_API.Services.Contracts;
 
@@ -38,12 +39,12 @@ namespace SCAA_API.Services
                 .FirstOrDefaultAsync(x => x.UserName.ToLower() == loginRequestDto.UserName.ToLower());
 
             if (!user.LockoutEnabled)
-                throw new UnauthorizedAccessException("Unable to sign in with locked account");
+                throw new UnauthorizedException("Unable to sign in with locked account");
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
             if (user == null || !isValid)
-                throw new UnauthorizedAccessException("User not found or password is incorrect");
+                throw new BadRequestException("User not found or password is incorrect");
 
 
             //If user was found generate token
@@ -75,7 +76,7 @@ namespace SCAA_API.Services
             }
             else
             {
-                throw new BadHttpRequestException(result.Errors.FirstOrDefault().Description);
+                throw new BadRequestException(result.Errors.FirstOrDefault().Description);
             }
 
         }

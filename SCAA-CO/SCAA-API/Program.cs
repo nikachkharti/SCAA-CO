@@ -21,6 +21,7 @@ namespace SCAA_API
 
             var app = builder.Build();
 
+            app.UseErrorHandling();
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseDbAutoUpdate();

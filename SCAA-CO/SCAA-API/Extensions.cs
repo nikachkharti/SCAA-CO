@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using SCAA_API.Middleware;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -160,6 +161,11 @@ namespace SCAA_API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+        }
+
+        public static void UseErrorHandling(this WebApplication app)
+        {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
         }
 
     }
