@@ -74,7 +74,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port": 55090
+            "port": 5030
           }
         },
         "test": {
