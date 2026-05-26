@@ -82,16 +82,9 @@ namespace SCAA_API
 
         public static void UseDbAutoUpdate(this WebApplication app)
         {
-            try
-            {
-                using var scope = app.Services.CreateScope();
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Migration failed: {ex.Message}", ex);
-            }
+            using var scope = app.Services.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            dbContext.Database.Migrate();
         }
 
         public static void AddRepository(this WebApplicationBuilder builder)
@@ -166,6 +159,20 @@ namespace SCAA_API
         public static void UseErrorHandling(this WebApplication app)
         {
             app.UseMiddleware<ErrorHandlingMiddleware>();
+        }
+
+        public static void AddCors(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
         }
 
     }

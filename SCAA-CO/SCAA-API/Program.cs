@@ -17,14 +17,16 @@ namespace SCAA_API
             builder.AddServices();
             builder.AddIdentity();
             builder.AddAuthentication();
+            builder.AddCors();
 
 
             var app = builder.Build();
 
             app.UseErrorHandling();
+            app.UseDbAutoUpdate();
+            app.UseCors("AllowAll");
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseDbAutoUpdate();
             if (app.Environment.IsDevelopment())
                 app.UseHttpsRedirection();
             app.MapHealthChecks("/health");
