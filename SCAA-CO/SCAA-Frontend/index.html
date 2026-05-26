@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <main class="container">
+        <header>
+            <h1>Categories</h1>
+        </header>
+
+        <section class="form-section">
+            <input type="hidden" id="categoryId" />
+
+            <label for="categoryName" class="visually-hidden">Category name</label>
+            <input type="text" id="categoryName" placeholder="Enter category name" autocomplete="off" />
+
+            <div class="form-actions">
+                <button id="saveBtn" type="button" class="primary">Save</button>
+                <button id="updateBtn" type="button" class="primary" hidden>Update</button>
+                <button id="cancelBtn" type="button" hidden>Cancel</button>
+            </div>
+        </section>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+
+        <section class="list-section">
+            <h2>All Categories</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="categoryTableBody"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>
