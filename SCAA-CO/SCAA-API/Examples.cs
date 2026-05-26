@@ -17,7 +17,6 @@ public sealed record LoginRequestDtoExample : IExamplesProvider<LoginRequestDto>
 }
 
 
-
 public sealed record CategoryForCreatingDtoExample : IExamplesProvider<CategoryForCreatingDto>
 {
     public CategoryForCreatingDto GetExamples() =>
