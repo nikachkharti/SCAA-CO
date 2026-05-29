@@ -4,7 +4,7 @@
       <h2>Categories</h2>
       <p class="subtitle">Manage product categories.</p>
     </div>
-    <span class="count-pill">{{ categories().length }} total</span>
+    <span class="count-pill">{{ totalCount() }} total</span>
   </header>
 
   @if (error()) {
@@ -28,18 +28,60 @@
   </div>
 
   <div class="card">
-    <div class="search-bar">
-      <span class="search-icon" aria-hidden="true">🔍</span>
-      <input
-        type="text"
-        name="searchTerm"
-        [ngModel]="searchTerm()"
-        (ngModelChange)="searchTerm.set($event)"
-        placeholder="Search categories..."
-      />
-      @if (searchTerm()) {
-        <button type="button" class="search-clear" (click)="clearSearch()">×</button>
-      }
+    <div class="toolbar">
+      <div class="search-bar">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          name="searchTerm"
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)"
+          placeholder="Search current page..."
+        />
+        @if (searchTerm()) {
+          <button type="button" class="search-clear" (click)="clearSearch()">×</button>
+        }
+      </div>
+
+      <div class="sort-group">
+        <span class="group-label">Sort:</span>
+        <button
+          type="button"
+          class="sort-btn"
+          [class.active]="sortBy() === 'id'"
+          (click)="toggleSort('id')"
+        >
+          ID
+          @if (sortBy() === 'id') {
+            <span class="sort-arrow">{{ ascending() ? '↑' : '↓' }}</span>
+          }
+        </button>
+        <button
+          type="button"
+          class="sort-btn"
+          [class.active]="sortBy() === 'categoryName'"
+          (click)="toggleSort('categoryName')"
+        >
+          Name
+          @if (sortBy() === 'categoryName') {
+            <span class="sort-arrow">{{ ascending() ? '↑' : '↓' }}</span>
+          }
+        </button>
+      </div>
+
+      <div class="page-size-group">
+        <label for="pageSize" class="group-label">Per page:</label>
+        <select
+          id="pageSize"
+          name="pageSize"
+          [ngModel]="pageSize()"
+          (ngModelChange)="changePageSize(+$event)"
+        >
+          @for (size of pageSizeOptions; track size) {
+            <option [value]="size">{{ size }}</option>
+          }
+        </select>
+      </div>
     </div>
 
     @if (loading()) {
@@ -47,9 +89,11 @@
     } @else if (filteredCategories().length === 0) {
       <div class="state-msg empty">
         @if (searchTerm()) {
-          No categories match "<strong>{{ searchTerm() }}</strong>".
-        } @else {
+          No categories on this page match "<strong>{{ searchTerm() }}</strong>".
+        } @else if (totalCount() === 0) {
           No categories yet. Create your first one above.
+        } @else {
+          Nothing to show on this page.
         }
       </div>
     } @else {
@@ -82,6 +126,51 @@
           </li>
         }
       </ul>
+    }
+
+    @if (totalCount() > 0) {
+      <footer class="pagination">
+        <span class="range-info">
+          Showing <strong>{{ rangeFrom() }}</strong>–<strong>{{ rangeTo() }}</strong>
+          of <strong>{{ totalCount() }}</strong>
+        </span>
+
+        <nav class="pager" aria-label="Pagination">
+          <button
+            type="button"
+            class="pager-btn"
+            [disabled]="pageNumber() === 1 || loading()"
+            (click)="goToPage(pageNumber() - 1)"
+          >
+            ‹ Prev
+          </button>
+
+          @for (page of pageList(); track $index) {
+            @if (page === null) {
+              <span class="pager-ellipsis">…</span>
+            } @else {
+              <button
+                type="button"
+                class="pager-btn"
+                [class.active]="page === pageNumber()"
+                [disabled]="loading()"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            }
+          }
+
+          <button
+            type="button"
+            class="pager-btn"
+            [disabled]="pageNumber() === totalPages() || loading()"
+            (click)="goToPage(pageNumber() + 1)"
+          >
+            Next ›
+          </button>
+        </nav>
+      </footer>
     }
   </div>
 </section>
