@@ -1,0 +1,87 @@
+<section class="categories-page">
+  <header class="page-header">
+    <div>
+      <h2>Categories</h2>
+      <p class="subtitle">Manage product categories.</p>
+    </div>
+    <span class="count-pill">{{ categories().length }} total</span>
+  </header>
+
+  @if (error()) {
+    <div class="alert error" role="alert">
+      <span>{{ error() }}</span>
+      <button type="button" class="alert-close" (click)="dismissError()">×</button>
+    </div>
+  }
+
+  <div class="card">
+    <form class="create-form" (ngSubmit)="createCategory()">
+      <input
+        type="text"
+        name="newCategoryName"
+        [(ngModel)]="newCategoryName"
+        placeholder="New category name"
+        required
+      />
+      <button type="submit" class="btn btn-primary">+ Add Category</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="search-bar">
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        name="searchTerm"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+        placeholder="Search categories..."
+      />
+      @if (searchTerm()) {
+        <button type="button" class="search-clear" (click)="clearSearch()">×</button>
+      }
+    </div>
+
+    @if (loading()) {
+      <div class="state-msg">Loading categories...</div>
+    } @else if (filteredCategories().length === 0) {
+      <div class="state-msg empty">
+        @if (searchTerm()) {
+          No categories match "<strong>{{ searchTerm() }}</strong>".
+        } @else {
+          No categories yet. Create your first one above.
+        }
+      </div>
+    } @else {
+      <ul class="category-list">
+        @for (category of filteredCategories(); track category.id) {
+          <li class="category-item">
+            @if (editingId() === category.id) {
+              <input
+                class="edit-input"
+                type="text"
+                name="editCategoryName"
+                [(ngModel)]="editCategoryName"
+                (keyup.enter)="saveEdit()"
+                (keyup.escape)="cancelEdit()"
+              />
+              <div class="actions">
+                <button type="button" class="btn btn-primary" (click)="saveEdit()">Save</button>
+                <button type="button" class="btn btn-ghost" (click)="cancelEdit()">Cancel</button>
+              </div>
+            } @else {
+              <div class="name-block">
+                <span class="id-badge">#{{ category.id }}</span>
+                <span class="name">{{ category.categoryName }}</span>
+              </div>
+              <div class="actions">
+                <button type="button" class="btn btn-secondary" (click)="startEdit(category)">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="deleteCategory(category.id)">Delete</button>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
