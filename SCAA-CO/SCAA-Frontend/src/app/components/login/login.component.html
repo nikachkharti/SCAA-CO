@@ -1,0 +1,49 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <header>
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in to your SCAA account.</p>
+    </header>
+
+    @if (error()) {
+      <div class="alert error">{{ error() }}</div>
+    }
+
+    <form class="auth-form" (ngSubmit)="submit()" #f="ngForm">
+      <label>
+        <span>Email</span>
+        <input
+          type="email"
+          name="userName"
+          [(ngModel)]="userName"
+          autocomplete="username"
+          required
+        />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          autocomplete="current-password"
+          required
+          minlength="1"
+        />
+      </label>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="submitting() || f.invalid"
+      >
+        @if (submitting()) { Signing in... } @else { Sign in }
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Don't have an account? <a routerLink="/register">Register</a>
+    </p>
+  </div>
+</section>

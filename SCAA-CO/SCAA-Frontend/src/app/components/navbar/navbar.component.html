@@ -4,17 +4,32 @@
     <span class="brand-sub">Console</span>
   </a>
 
-  <ul class="nav-links">
-    @for (link of links; track link.path) {
-      <li>
-        <a
-          [routerLink]="link.path"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: false }"
-        >
-          {{ link.label }}
-        </a>
-      </li>
+  @if (isAuthenticated()) {
+    <ul class="nav-links">
+      @for (link of links; track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: false }"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+  }
+
+  <div class="nav-end">
+    @if (isAuthenticated()) {
+      <span class="user-chip" [title]="currentUser()?.email ?? ''">
+        <span class="user-dot"></span>
+        {{ currentUser()?.email ?? 'Account' }}
+      </span>
+      <button type="button" class="logout-btn" (click)="logout()">Logout</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active" class="auth-link">Login</a>
+      <a routerLink="/register" routerLinkActive="active" class="auth-link primary">Register</a>
     }
-  </ul>
+  </div>
 </nav>

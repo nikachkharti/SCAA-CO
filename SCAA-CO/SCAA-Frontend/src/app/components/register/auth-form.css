@@ -1,0 +1,4 @@
+/* Shared auth form styles — reuses .auth-page / .auth-card / .auth-form / .btn / .alert classes
+   defined in ../login/auth-form.css. This file exists so the @Component styleUrl resolves
+   relative to register/, but the actual definitions live alongside the login component. */
+@import url('../login/auth-form.css');
