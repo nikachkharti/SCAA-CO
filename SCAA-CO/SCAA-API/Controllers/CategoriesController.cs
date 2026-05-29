@@ -17,8 +17,7 @@ namespace SCAA_API.Controllers
         /// List All Categories
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetCategories(
-            [FromQuery] PagedRequestDto parameters)
+        public async Task<IActionResult> GetCategories([FromQuery] PagedRequestDto parameters)
         {
             var result = await categoryService.GetAllCategoriesAsync(parameters);
 
