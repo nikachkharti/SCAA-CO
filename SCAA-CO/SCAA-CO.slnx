@@ -1,4 +1,8 @@
 <Solution>
+  <Project Path="../SCAA-CO-Frontend/SCAA-CO-Frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
