@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SCAA_API.Models.Category;
+using SCAA_API.Models.Common;
 using SCAA_API.Services.Contracts;
 using Swashbuckle.AspNetCore.Filters;
 using System.Net;
@@ -16,9 +17,10 @@ namespace SCAA_API.Controllers
         /// List All Categories
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategories(
+            [FromQuery] PagedRequestDto parameters)
         {
-            var result = await categoryService.GetAllCategoriesAsync();
+            var result = await categoryService.GetAllCategoriesAsync(parameters);
 
             var response = new CommonResponse()
             {

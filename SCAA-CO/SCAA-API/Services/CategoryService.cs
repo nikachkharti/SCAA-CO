@@ -2,8 +2,10 @@
 using SCAA_API.Entities;
 using SCAA_API.Exceptions;
 using SCAA_API.Models.Category;
+using SCAA_API.Models.Common;
 using SCAA_API.Repository.Contracts;
 using SCAA_API.Services.Contracts;
+using System.Linq.Expressions;
 
 namespace SCAA_API.Services
 {
@@ -32,16 +34,33 @@ namespace SCAA_API.Services
             return category.Id;
         }
 
-        public async Task<List<CategoryForGettingDto>> GetAllCategoriesAsync()
+        public async Task<PagedResponseDto<CategoryForGettingDto>> GetAllCategoriesAsync(PagedRequestDto parameters)
         {
-            var categories = await categoryRepository.GetAllAsync();
+            Expression<Func<Category, object>> orderBy = parameters.SortBy?.ToLower() switch
+            {
+                "id" => x => x.Id,
+                "categoryName" => x => x.CategoryName,
+                _ => x => x.Id
+            };
+
+            var categories = await categoryRepository.GetAllAsync(
+                pageNumber: parameters.PageNumber,
+                pageSize: parameters.PageSize,
+                orderBy: orderBy,
+                ascending: parameters.Ascending
+            );
 
             if (!categories.Items.Any())
                 throw new NotFoundException("Categories not found");
 
-            return mapper.Map<List<CategoryForGettingDto>>(categories.Items);
+            return new PagedResponseDto<CategoryForGettingDto>
+            {
+                Items = mapper.Map<List<CategoryForGettingDto>>(categories.Items),
+                TotalCount = categories.TotalCount,
+                PageNumber = parameters.PageNumber,
+                PageSize = parameters.PageSize
+            };
         }
-
         public async Task<CategoryForGettingDto> GetCategoryWithIdAsync(int categoryId)
         {
             if (categoryId <= 0)

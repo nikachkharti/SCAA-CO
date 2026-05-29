@@ -7,7 +7,6 @@ namespace SCAA_API.Repository.Base
             where T : class
             where TContext : DbContext
     {
-
         Task<(IEnumerable<T> Items, int TotalCount)> GetAllAsync(
             Expression<Func<T, bool>> filter = null,
             int? pageNumber = null,
