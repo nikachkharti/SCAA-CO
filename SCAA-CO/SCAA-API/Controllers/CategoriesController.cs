@@ -9,7 +9,7 @@ namespace SCAA_API.Controllers
 {
     [Route("api/categories")]
     [ApiController]
-    //[Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin")]
     public class CategoriesController(ICategoryService categoryService) : ControllerBase
     {
         /// <summary>
