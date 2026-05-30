@@ -29,7 +29,7 @@ export class CategoriesComponent implements OnInit {
   readonly pageNumber = signal(1);
   readonly pageSize = signal(10);
   readonly sortBy = signal<SortField>('id');
-  readonly ascending = signal(true);
+  readonly ascending = signal(false);
 
   readonly editingId = signal<number | null>(null);
   readonly searchTerm = signal('');
