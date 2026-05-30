@@ -1,5 +1,6 @@
 ﻿using SCAA_API.Models.Authentication;
 using SCAA_API.Models.Category;
+using SCAA_API.Models.Supplier;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace SCAA_API;
@@ -27,4 +28,17 @@ public sealed record CategoryForUpdatingDtoExample : IExamplesProvider<CategoryF
 {
     public CategoryForUpdatingDto GetExamples() =>
         new CategoryForUpdatingDto() { Id = 1, CategoryName = "Updated Test Category" };
+}
+
+
+public sealed record SupplierForCreatingDtoExample : IExamplesProvider<SupplierForCreatingDto>
+{
+    public SupplierForCreatingDto GetExamples() =>
+        new SupplierForCreatingDto() { SupplierName = "Test Supplier" };
+}
+
+public sealed record SupplierForUpdatingDtoExample : IExamplesProvider<SupplierForUpdatingDto>
+{
+    public SupplierForUpdatingDto GetExamples() =>
+        new SupplierForUpdatingDto() { Id = 1, SupplierName = "Updated Test Supplier" };
 }

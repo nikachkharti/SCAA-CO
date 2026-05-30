@@ -61,6 +61,7 @@ namespace SCAA_API.Services
                 PageSize = parameters.PageSize
             };
         }
+
         public async Task<CategoryForGettingDto> GetCategoryWithIdAsync(int categoryId)
         {
             if (categoryId <= 0)
