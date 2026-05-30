@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { authGuard, publicOnlyGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [publicOnlyGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [publicOnlyGuard] },
   { path: 'categories', component: CategoriesComponent, canActivate: [authGuard] },
+  { path: 'suppliers', component: SuppliersComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: 'categories' }
 ];

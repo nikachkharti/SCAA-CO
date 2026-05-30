@@ -1,0 +1,3 @@
+/* Suppliers reuses the same visual styles as Categories — the markup uses the
+   identical class names so this file just re-exports them. */
+@import url('../categories/categories.component.css');
