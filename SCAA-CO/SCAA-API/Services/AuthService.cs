@@ -38,14 +38,16 @@ namespace SCAA_API.Services
             var user = await _context.ApplicationUsers
                 .FirstOrDefaultAsync(x => x.UserName.ToLower() == loginRequestDto.UserName.ToLower());
 
+            if (user == null)
+                throw new BadRequestException("User with provided credentials not found");
+
             if (!user.LockoutEnabled)
                 throw new UnauthorizedException("Unable to sign in with locked account");
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
-            if (user == null || !isValid)
-                throw new BadRequestException("User not found or password is incorrect");
-
+            if (!isValid)
+                throw new BadRequestException("User with provided credentials not found");
 
             //If user was found generate token
             var roles = await _userManager.GetRolesAsync(user);
